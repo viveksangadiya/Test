@@ -55,7 +55,8 @@ data:any;
     },)
 
     onSubmission(){
-      localStorage.setItem('data',JSON.stringify(this.registrationForm.value));
+      console.log(localStorage.setItem('data',JSON.stringify(this.registrationForm.value)))
+      
       this.router.navigate(['/home'])
     }
     onSubmit(){
