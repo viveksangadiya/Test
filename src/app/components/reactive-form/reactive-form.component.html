@@ -1,0 +1,74 @@
+<h1>
+    Reactive Form
+  </h1>
+  
+  <form [formGroup]="registrationForm" class="container-fluid" (ngSubmit)="onSubmit()">
+      <div  class="form-group"> 
+        <fieldset>
+            <label for="fname" id="name-label">First Name
+                <input class="field" type="text" id="fname" name="fname" placeholder="Enter your First name" required
+                   formControlName="fname"></label>
+
+            <br>
+            <label for="mname" id="name-label">Middle Name
+                <input class="field" type="text" id="mname" name="mname" placeholder="Enter your Middle name" required
+                formControlName="mname"></label>
+            <br>
+            <label for="lname" id="name-label">Last Name
+                <input class="field" type="text" id="lname" name="lname" placeholder="Enter your Last name" required
+                formControlName="lname"></label>
+            <br>
+            <label>Text</label>
+            <textarea class="textarea" name="text" class="field" formControlName="text"></textarea>
+            <br>
+
+            <label>Age:</label>
+            <input type="number" name="age" id="age" placeholder="Enter Age" class="age" formControlName="age"
+                required>
+            <br>
+            <br>
+            <div class="form-group">
+                <input type="radio" id="male" name="gender" value="male" formControlName="gender">
+                <label for="male">Male</label><br>
+                <input type="radio" id="female" name="gender" value="female" formControlName="gender">
+                <label for="female">Female</label><br>
+                <input type="radio" id="other" name="gender" value="other" formControlName="gender">
+                <label for="other">Other</label>
+            </div>
+           
+<!-- <div class="form-group">
+
+            <input type="checkbox" id="cricket" name="cricket" value="cricket" formControlName="cricket">
+            <label for="cricket"> Cricket</label><br>
+            <input type="checkbox" id="hokky" name="hokky" value="hokky" formControlName="hoky">
+            <label for="hokky"> Hokky</label><br>
+            <input type="checkbox" id="football" name="football" value="football" formControlName="football">
+            <label for="football"> football</label><br>
+            <input type="checkbox" id="music" name="music" value="music" formControlName="music">
+            <label for="music"> music</label><br>
+            <input type="checkbox" id="singing" name="singing" value="singing" formControlName="singing">
+            <label for="singing"> singing</label><br>
+        </div> -->
+            <label for="company">Choose a company:</label>
+
+            <select name="company" id="company" formGroupName="company">
+                <option value="tech">tech</option>
+                <option value="extensor">extensor</option>
+                <option value="royal">royal</option>
+                <option value="tcs">tcs</option>
+                <option value="infosys">infosys</option>
+                <option value="reylon">reylon</option>
+                <option value="sv">sv</option>
+            </select>
+            <br>
+            <button type="button" name="back" class="btn btn-primary" routerLink="/home">Back</button>
+            <input type="reset" name="clear" value="Clear" class="btn btn-danger">
+            <button type="button" name="submission" class="btn btn-success" (click)="onSubmission()">submission</button>
+            <button class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
+            <button class="btn btn-success" type="button" (click)="saveFormDataToLocalStorage()">Local Storage</button>
+        </fieldset>
+
+      </div>
+     
+      {{registrationForm.value | json}}
+  </form>

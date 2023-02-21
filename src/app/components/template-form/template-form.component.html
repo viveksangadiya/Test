@@ -1,0 +1,70 @@
+<div class="container">
+    <h1>
+        Template Form
+    </h1>
+    <form class="container-fluid" #username="ngForm" (ngSubmit)="onSubmit()">
+
+        <fieldset>
+            <label for="fname" id="name-label">First Name
+                <input class="field" type="text" id="fname" name="fname" placeholder="Enter your First name" required
+                    [(ngModel)]="userModel.fname"></label>
+
+            <br>
+            <label for="mname" id="name-label">Middle Name
+                <input class="field" type="text" id="mname" name="mname" placeholder="Enter your Middle name" required
+                    [(ngModel)]="userModel.mname"></label>
+            <br>
+            <label for="lname" id="name-label">Last Name
+                <input class="field" type="text" id="lname" name="lname" placeholder="Enter your Last name" required
+                    [(ngModel)]="userModel.lname"></label>
+            <br>
+            <label>Text</label>
+            <textarea class="textarea" name="text"
+                [(ngModel)]="userModel.fname + userModel.mname + userModel.lname"></textarea>
+            <br>
+
+            <label>Age:</label>
+            <input type="number" name="age" id="age" placeholder="Enter Age" class="age" [(ngModel)]="userModel.age"
+                required>
+
+            <br>
+            <br>
+            <input type="radio" id="male" name="gender" value="male" [(ngModel)]="userModel.gender">
+            <label for="male">Male</label><br>
+            <input type="radio" id="female" name="gender" value="female" [(ngModel)]="userModel.gender">
+            <label for="female">Female</label><br>
+            <input type="radio" id="other" name="gender" value="other" [(ngModel)]="userModel.gender">
+            <label for="other">Other</label>
+
+
+            <input type="checkbox" id="cricket" name="cricket" value="cricket" [(ngModel)]="userModel.hobby">
+            <label for="cricket"> Cricket</label><br>
+            <input type="checkbox" id="hokky" name="hokky" value="hokky" [(ngModel)]="userModel.hobby">
+            <label for="hokky">Hokky</label><br>
+            <input type="checkbox" id="football" name="football" value="football" [(ngModel)]="userModel.hobby">
+            <label for="football"> football</label><br>
+            <input type="checkbox" id="music" name="music" value="music" [(ngModel)]="userModel.hobby">
+            <label for="music"> music</label><br>
+            <input type="checkbox" id="singing" name="singing" value="singing" [(ngModel)]="userModel.hobby">
+            <label for="singing"> singing</label><br>
+
+            <label for="company">Choose a company:</label>
+
+            <select name="company" id="company" [(ngModel)]="userModel.company">
+                <option value="tech">tech</option>
+                <option value="extensor">extensor</option>
+                <option value="royal">royal</option>
+                <option value="tcs">tcs</option>
+                <option value="infosys">infosys</option>
+                <option value="reylon">reylon</option>
+                <option value="sv">sv</option>
+            </select>
+            <br>
+            <button type="button" name="back" class="btn btn-primary" routerLink="/home">Back</button>
+            <input type="reset" name="clear" value="Clear" class="btn btn-danger">
+            <button type="button" name="submission" class="btn btn-success" (click)="onSubmission()">submission</button>
+        </fieldset>
+
+    </form>
+    {{username.value | json}}
+</div>
