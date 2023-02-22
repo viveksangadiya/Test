@@ -7,50 +7,53 @@
         <fieldset>
             <label for="fname" id="name-label">First Name
                 <input class="field" type="text" id="fname" name="fname" placeholder="Enter your First name" required
-                    [(ngModel)]="userModel.fname"></label>
+                    [(ngModel)]="user.fname"></label>
 
             <br>
             <label for="mname" id="name-label">Middle Name
                 <input class="field" type="text" id="mname" name="mname" placeholder="Enter your Middle name" required
-                    [(ngModel)]="userModel.mname"></label>
+                    [(ngModel)]="user.mname"></label>
             <br>
             <label for="lname" id="name-label">Last Name
                 <input class="field" type="text" id="lname" name="lname" placeholder="Enter your Last name" required
-                    [(ngModel)]="userModel.lname"></label>
+                    [(ngModel)]="user.lname"></label>
             <br>
             <label>Text</label>
             <textarea class="textarea" name="text"
-                [(ngModel)]="userModel.fname + userModel.mname + userModel.lname"></textarea>
+                (ngModel)="user.fname + user.mname + user.lname"></textarea>
             <br>
 
             <label>Age:</label>
-            <input type="number" name="age" id="age" placeholder="Enter Age" class="age" [(ngModel)]="userModel.age"
+            <input type="number" name="age" id="age" placeholder="Enter Age" class="age" [(ngModel)]="user.age"
                 required>
 
             <br>
             <br>
-            <input type="radio" id="male" name="gender" value="male" [(ngModel)]="userModel.gender">
+            <input type="radio" id="male" name="gender" value="male" [(ngModel)]="user.gender">
             <label for="male">Male</label><br>
-            <input type="radio" id="female" name="gender" value="female" [(ngModel)]="userModel.gender">
+            <input type="radio" id="female" name="gender" value="female" [(ngModel)]="user.gender">
             <label for="female">Female</label><br>
-            <input type="radio" id="other" name="gender" value="other" [(ngModel)]="userModel.gender">
+            <input type="radio" id="other" name="gender" value="other" [(ngModel)]="user.gender">
             <label for="other">Other</label>
 
+            
 
-            <input type="checkbox" id="cricket" name="cricket" value="cricket" [(ngModel)]="userModel.hobby">
-            <label for="cricket"> Cricket</label><br>
-            <input type="checkbox" id="hokky" name="hokky" value="hokky" [(ngModel)]="userModel.hobby">
-            <label for="hokky">Hokky</label><br>
-            <input type="checkbox" id="football" name="football" value="football" [(ngModel)]="userModel.hobby">
-            <label for="football"> football</label><br>
-            <input type="checkbox" id="music" name="music" value="music" [(ngModel)]="userModel.hobby">
-            <label for="music"> music</label><br>
-            <input type="checkbox" id="singing" name="singing" value="singing" [(ngModel)]="userModel.hobby">
-            <label for="singing"> singing</label><br>
+
+            <label for="gender">Hobbies</label>
+                <div class="form-group" ngModelGroup="hobbies" #hobbies="ngModelGroup">
+                    <span *ngFor="let hobby of hobbyList">
+                        <input type="checkbox" class="form-check-input me-1"
+                         [value]="hobby" [name]="hobby" 
+                        [(ngModel)]="user.hobby[hobby]">
+                        <label for="music" class="form-check-label me-2">{{hobby |  uppercase}}</label>
+                    </span>
+                   
+                </div>
+            
 
             <label for="company">Choose a company:</label>
 
-            <select name="company" id="company" [(ngModel)]="userModel.company">
+            <select name="company" id="company" [(ngModel)]="user.company">
                 <option value="tech">tech</option>
                 <option value="extensor">extensor</option>
                 <option value="royal">royal</option>

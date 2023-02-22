@@ -1,65 +1,112 @@
-import { Component,OnInit } from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {FormGroup,FormControl} from '@angular/forms'
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms'
+import { ActivatedRoute, Router } from '@angular/router';
+import { Hobbies, userModel } from 'src/app/model/user.model';
+import { ServicesService } from 'src/app/services.service';
 @Component({
   selector: 'app-reactive-form',
   templateUrl: './reactive-form.component.html',
   styleUrls: ['./reactive-form.component.css']
 })
-export class ReactiveFormComponent implements OnInit{
+export class ReactiveFormComponent implements OnInit {
   datas: any;
-
+  hobbyList = Hobbies;
   ngOnInit(): void {
-    
-    this.datas=JSON.parse(localStorage.getItem('') ?? "{}");
-    console.log(this.datas);
+    this.userId = this.route.snapshot.queryParams['id'];
+
+    this.route.queryParams.subscribe(qp => {
+      this.userId = qp['id'];
+    });
+
+    // this.datas=JSON.parse(localStorage.getItem('') ?? "{}");
+    // console.log(this.datas);
   }
 
-  
-onLoadApi() {
-  // JSON.parse( localStorage.getItem('data') ?? "{}")
-//  this.registrationForm.setValue({
-//   userName : 'vivek',
-//   passWord : 'vivek',
-//   confirmPassword:'vivek',
-//   address : (
-//     {
-//       city:'vivek',
-//       state:'vivek',
-//       country:'vivek'
-//     }
-//   )
-//  })
-}
 
-constructor(private fb:FormBuilder,private router:Router){}
-data:any;
-  saveFormDataToLocalStorage(){
-    const user =
-    JSON.parse( localStorage.getItem('data') ?? "{}")
-    ;
-    console.log(user);
-    this.registrationForm.setValue(user);
+  onLoadApi() {
+    // JSON.parse( localStorage.getItem('data') ?? "{}")
+    //  this.registrationForm.setValue({
+    //   userName : 'vivek',
+    //   passWord : 'vivek',
+    //   confirmPassword:'vivek',
+    //   address : (
+    //     {
+    //       city:'vivek',
+    //       state:'vivek',
+    //       country:'vivek'
+    //     }
+    //   )
+    //  })
   }
-  registrationForm : any=this.fb.group(
-     {
-      fname : [''],
-      mname : [''],
-      lname : [''],
-      text : [''],
-      age:[''],
-      gender : [''],
-      hobby:[''],
-      company:['']
+
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private servicesService:ServicesService) { }
+  data: any;
+  loadFormDataToLocalStorage() {
+    this.user =
+      JSON.parse(localStorage.getItem(this.userId?.toString() ?? "") ?? "{}");
+    // console.log(user);
+
+    this.hobbyList.forEach(h => {
+      if(this.user.hobby[h] == undefined){
+        this.user.hobby[h] = false
+      }
+    })
+
+    let tmp : userModel = this.user;
+    this.deleteId(tmp);
+    this.registrationForm.setValue(tmp);
+    // this.registrationForm.setValue(Object.keys(this.user).reduce((obj:any,key) => {
+    //   if(key != 'id'){
+    //     obj[key] = (this.user as any)[key];
+    //   }
+    //   return obj;
+    // },{}));
+
+  }
+
+  deleteId(tmp: userModel){
+    delete tmp.id;
+  }
+
+  userId: string | undefined;
+  user: userModel = {
+    id: "",
+    fname: "",
+    mname: "",
+    lname: "",
+    age: 0,
+    gender: "",
+    hobby: {},
+    company: ""
+  };
+  registrationForm: any = new FormGroup(
+    {
+      'fname': new FormControl(''),
+      'mname': new FormControl(''),
+      'lname': new FormControl,
+
+      'age': new FormControl(''),
+      'gender': new FormControl,
+      'hobby': new FormGroup(this.hobbyList.reduce((acc: any, crr) => {
+        acc[crr] = new FormControl(false);
+        return acc;
+      }, [])),
+      'company': new FormControl('')
     },)
 
-    onSubmission(){
-      console.log(localStorage.setItem('data',JSON.stringify(this.registrationForm.value)))
-      
-      this.router.navigate(['/home'])
-    }
-    onSubmit(){
-      localStorage.setItem('data',JSON.stringify(this.registrationForm.value))
-    }
+  onSubmit() {
+    // localStorage.setItem('data', JSON.stringify(this.registrationForm.value))
+    this.user = this.registrationForm.value;
+    this.user.id = this.userId!;
+    this.servicesService.setData(this.userId,this.user);
+    this.router.navigate(['']);
+    this.router.navigate(['/home'])
+  }
+  onSubmitForm(){
+    this.user = this.registrationForm.value;
+    this.user.id = this.userId!;
+    this.servicesService.setData(this.userId,this.user);
+    this.router.navigate(['']);
+  }
 }

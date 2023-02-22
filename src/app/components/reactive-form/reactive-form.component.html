@@ -2,7 +2,7 @@
     Reactive Form
   </h1>
   
-  <form [formGroup]="registrationForm" class="container-fluid" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registrationForm" class="container-fluid" (ngSubmit)="onSubmitForm()">
       <div  class="form-group"> 
         <fieldset>
             <label for="fname" id="name-label">First Name
@@ -19,7 +19,7 @@
                 formControlName="lname"></label>
             <br>
             <label>Text</label>
-            <textarea class="textarea" name="text" class="field" formControlName="text"></textarea>
+            <textarea class="textarea" name="text" class="field"></textarea>
             <br>
 
             <label>Age:</label>
@@ -36,22 +36,21 @@
                 <label for="other">Other</label>
             </div>
            
-<div class="form-group">
-
-            <input type="checkbox" id="cricket" name="cricket" value="cricket" formControlName="hobby">
-            <label for="cricket"> Cricket</label><br>
-            <input type="checkbox" id="hokky" name="hokky" value="hokky" formControlName="hobby">
-            <label for="hokky"> Hokky</label><br>
-            <input type="checkbox" id="football" name="football" value="football" formControlName="hobby">
-            <label for="football"> football</label><br>
-            <input type="checkbox" id="music" name="music" value="music" formControlName="hobby">
-            <label for="music"> music</label><br>
-            <input type="checkbox" id="singing" name="singing" value="singing" formControlName="hobby">
-            <label for="singing"> singing</label><br>
-        </div>
+            <label for="gender">Hobbies</label>
+                <div class="form-group" formGroupName="hobby">
+                   
+                    <span *ngFor="let hobby of hobbyList">
+                        <input type="checkbox" class="form-check-input me-1"
+                            [value]="hobby" [name]="hobby" 
+                            [formControlName]="hobby">
+                           
+                        <label for="music" class="form-check-label me-2">{{hobby}}</label>
+                    </span> 
+                   </div>
+    
             <label for="company">Choose a company:</label>
 
-            <select name="company" id="company" formGroupName="company">
+            <select name="company" id="company"  formControlName="company">
                 <option value="tech">tech</option>
                 <option value="extensor">extensor</option>
                 <option value="royal">royal</option>
@@ -63,9 +62,8 @@
             <br>
             <button type="button" name="back" class="btn btn-primary" routerLink="/home">Back</button>
             <input type="reset" name="clear" value="Clear" class="btn btn-danger">
-            <button type="button" name="submission" class="btn btn-success" (click)="onSubmission()">submission</button>
             <button class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
-            <button class="btn btn-success" type="button" (click)="saveFormDataToLocalStorage()">Local Storage</button>
+            <button class="btn btn-success" type="button" (click)="loadFormDataToLocalStorage()">Load Data</button>
         </fieldset>
 
       </div>
