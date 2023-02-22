@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { FormGroup, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hobbies, userModel } from 'src/app/model/user.model';
@@ -19,28 +19,8 @@ export class ReactiveFormComponent implements OnInit {
       this.userId = qp['id'];
     });
 
-    // this.datas=JSON.parse(localStorage.getItem('') ?? "{}");
-    // console.log(this.datas);
   }
-
-
-  onLoadApi() {
-    // JSON.parse( localStorage.getItem('data') ?? "{}")
-    //  this.registrationForm.setValue({
-    //   userName : 'vivek',
-    //   passWord : 'vivek',
-    //   confirmPassword:'vivek',
-    //   address : (
-    //     {
-    //       city:'vivek',
-    //       state:'vivek',
-    //       country:'vivek'
-    //     }
-    //   )
-    //  })
-  }
-
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private servicesService:ServicesService) { }
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private servicesService: ServicesService) { }
   data: any;
   loadFormDataToLocalStorage() {
     this.user =
@@ -48,12 +28,12 @@ export class ReactiveFormComponent implements OnInit {
     // console.log(user);
 
     this.hobbyList.forEach(h => {
-      if(this.user.hobby[h] == undefined){
+      if (this.user.hobby[h] == undefined) {
         this.user.hobby[h] = false
       }
     })
 
-    let tmp : userModel = this.user;
+    let tmp: userModel = this.user;
     this.deleteId(tmp);
     this.registrationForm.setValue(tmp);
     // this.registrationForm.setValue(Object.keys(this.user).reduce((obj:any,key) => {
@@ -65,7 +45,7 @@ export class ReactiveFormComponent implements OnInit {
 
   }
 
-  deleteId(tmp: userModel){
+  deleteId(tmp: userModel) {
     delete tmp.id;
   }
 
@@ -82,12 +62,11 @@ export class ReactiveFormComponent implements OnInit {
   };
   registrationForm: any = new FormGroup(
     {
-      'fname': new FormControl(''),
-      'mname': new FormControl(''),
-      'lname': new FormControl,
-
-      'age': new FormControl(''),
-      'gender': new FormControl,
+      'fname': new FormControl('', [Validators.required]),
+      'mname': new FormControl('', [Validators.required]),
+      'lname': new FormControl('', [Validators.required]),
+      'age': new FormControl('', [Validators.required]),
+      'gender': new FormControl('', [Validators.required]),
       'hobby': new FormGroup(this.hobbyList.reduce((acc: any, crr) => {
         acc[crr] = new FormControl(false);
         return acc;
@@ -99,14 +78,14 @@ export class ReactiveFormComponent implements OnInit {
     // localStorage.setItem('data', JSON.stringify(this.registrationForm.value))
     this.user = this.registrationForm.value;
     this.user.id = this.userId!;
-    this.servicesService.setData(this.userId,this.user);
+    this.servicesService.setData(this.userId, this.user);
     this.router.navigate(['']);
     this.router.navigate(['/home'])
   }
-  onSubmitForm(){
+  onSubmitForm() {
     this.user = this.registrationForm.value;
     this.user.id = this.userId!;
-    this.servicesService.setData(this.userId,this.user);
+    this.servicesService.setData(this.userId, this.user);
     this.router.navigate(['']);
   }
 }

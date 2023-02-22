@@ -1,30 +1,36 @@
 <h1>
     Reactive Form
-  </h1>
-  
-  <form [formGroup]="registrationForm" class="container-fluid" (ngSubmit)="onSubmitForm()">
-      <div  class="form-group"> 
+</h1>
+
+<form [formGroup]="registrationForm" class="container-fluid" (ngSubmit)="onSubmitForm()">
+    <div class="form-group">
         <fieldset>
             <label for="fname" id="name-label">First Name
-                <input class="field" type="text" id="fname" name="fname" placeholder="Enter your First name" required
-                   formControlName="fname"></label>
-
+                <input class="field" type="text" id="fname" name="fname" placeholder="Enter your First name"
+                    formControlName="fname" ></label><br>
+            <small *ngIf="!registrationForm.get('fname')?.valid && registrationForm.get('fname')?.touched" class="text-danger">First name is
+                required</small>
             <br>
             <label for="mname" id="name-label">Middle Name
                 <input class="field" type="text" id="mname" name="mname" placeholder="Enter your Middle name" required
-                formControlName="mname"></label>
+                    formControlName="mname">
+            </label><br>
+            <small *ngIf="!registrationForm.get('mname')?.valid && registrationForm.get('mname')?.touched" class="text-danger">Middle name is
+                required</small>
             <br>
             <label for="lname" id="name-label">Last Name
                 <input class="field" type="text" id="lname" name="lname" placeholder="Enter your Last name" required
-                formControlName="lname"></label>
+                    formControlName="lname"></label><br>
+            <small *ngIf="!registrationForm.get('lname')?.valid && registrationForm.get('lname')?.touched"  class="text-danger">Last name is
+                required</small>
             <br>
             <label>Text</label>
             <textarea class="textarea" name="text" class="field"></textarea>
             <br>
 
             <label>Age:</label>
-            <input type="number" name="age" id="age" placeholder="Enter Age" class="age" formControlName="age"
-                required>
+            <input type="number" name="age" id="age" placeholder="Enter Age" class="age" formControlName="age" ><br>
+            <small *ngIf="!registrationForm.get('age')?.valid && registrationForm.get('age')?.touched" class="text-danger">Age required</small>
             <br>
             <br>
             <div class="form-group">
@@ -35,22 +41,21 @@
                 <input type="radio" id="other" name="gender" value="other" formControlName="gender">
                 <label for="other">Other</label>
             </div>
-           
+
             <label for="gender">Hobbies</label>
-                <div class="form-group" formGroupName="hobby">
-                   
-                    <span *ngFor="let hobby of hobbyList">
-                        <input type="checkbox" class="form-check-input me-1"
-                            [value]="hobby" [name]="hobby" 
-                            [formControlName]="hobby">
-                           
-                        <label for="music" class="form-check-label me-2">{{hobby}}</label>
-                    </span> 
-                   </div>
-    
+            <div class="form-group" formGroupName="hobby">
+
+                <span *ngFor="let hobby of hobbyList">
+                    <input type="checkbox" class="form-check-input me-1" [value]="hobby" [name]="hobby"
+                        [formControlName]="hobby">
+
+                    <label for="music" class="form-check-label me-2">{{hobby}}</label>
+                </span>
+            </div>
+
             <label for="company">Choose a company:</label>
 
-            <select name="company" id="company"  formControlName="company">
+            <select name="company" id="company" formControlName="company">
                 <option value="tech">tech</option>
                 <option value="extensor">extensor</option>
                 <option value="royal">royal</option>
@@ -66,7 +71,7 @@
             <button class="btn btn-success" type="button" (click)="loadFormDataToLocalStorage()">Load Data</button>
         </fieldset>
 
-      </div>
-     
-      {{registrationForm.value | json}}
-  </form>
+    </div>
+
+    {{registrationForm.value | json}}
+</form>

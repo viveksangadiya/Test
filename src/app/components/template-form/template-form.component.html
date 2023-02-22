@@ -7,26 +7,32 @@
         <fieldset>
             <label for="fname" id="name-label">First Name
                 <input class="field" type="text" id="fname" name="fname" placeholder="Enter your First name" required
-                    [(ngModel)]="user.fname"></label>
-
+                    [(ngModel)]="user.fname"></label><br>
+            <small *ngIf="username.form.get('fname')?.invalid  && username.form.get('fname')?.touched"
+                class="text-danger"> First name is required</small>
             <br>
             <label for="mname" id="name-label">Middle Name
                 <input class="field" type="text" id="mname" name="mname" placeholder="Enter your Middle name" required
-                    [(ngModel)]="user.mname"></label>
+                    [(ngModel)]="user.mname"></label> <br>
+            <small *ngIf="username.form.get('mname')?.invalid  && username.form.get('mname')?.touched"
+                class="text-danger">Middle name is required</small>
             <br>
             <label for="lname" id="name-label">Last Name
                 <input class="field" type="text" id="lname" name="lname" placeholder="Enter your Last name" required
-                    [(ngModel)]="user.lname"></label>
+                    [(ngModel)]="user.lname"></label> <br>
+            <small *ngIf="username.form.get('lname')?.invalid  && username.form.get('lname')?.touched"
+                class="text-danger">Last name is required</small>
             <br>
             <label>Text</label>
-            <textarea class="textarea" name="text"
-                (ngModel)="user.fname + user.mname + user.lname"></textarea>
+            <textarea class="textarea" name="text" (ngModel)="user.fname + user.mname + user.lname"></textarea>
             <br>
 
             <label>Age:</label>
             <input type="number" name="age" id="age" placeholder="Enter Age" class="age" [(ngModel)]="user.age"
                 required>
-
+            <br>
+            <small *ngIf="username.form.get('age')?.invalid  && username.form.get('age')?.touched"
+                class="text-danger">Age is requied</small>
             <br>
             <br>
             <input type="radio" id="male" name="gender" value="male" [(ngModel)]="user.gender">
@@ -35,21 +41,19 @@
             <label for="female">Female</label><br>
             <input type="radio" id="other" name="gender" value="other" [(ngModel)]="user.gender">
             <label for="other">Other</label>
-
-            
-
+            <br>
+            <br>
 
             <label for="gender">Hobbies</label>
-                <div class="form-group" ngModelGroup="hobbies" #hobbies="ngModelGroup">
-                    <span *ngFor="let hobby of hobbyList">
-                        <input type="checkbox" class="form-check-input me-1"
-                         [value]="hobby" [name]="hobby" 
+            <div class="form-group" ngModelGroup="hobbies" #hobbies="ngModelGroup">
+                <span *ngFor="let hobby of hobbyList">
+                    <input type="checkbox" class="form-check-input me-1" [value]="hobby" [name]="hobby"
                         [(ngModel)]="user.hobby[hobby]">
-                        <label for="music" class="form-check-label me-2">{{hobby |  uppercase}}</label>
-                    </span>
-                   
-                </div>
-            
+                    <label for="music" class="form-check-label me-2">{{hobby | uppercase}}</label>
+                </span>
+
+            </div>
+
 
             <label for="company">Choose a company:</label>
 

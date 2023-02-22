@@ -9,52 +9,46 @@ import { ServicesService } from 'src/app/services.service';
   styleUrls: ['./template-form.component.css']
 })
 export class TemplateFormComponent implements OnInit {
-  hobbyList=Hobbies;
+  hobbyList = Hobbies;
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.queryParams['id'];
-    if (this.servicesService.isUserExist(this.userId!)){
+    if (this.servicesService.isUserExist(this.userId!)) {
       this.user = this.servicesService.getData(this.userId!)!;
     }
 
-    this.route.queryParams.subscribe(qp=> {
+    this.route.queryParams.subscribe(qp => {
       this.userId = qp['id'];
-      if (this.servicesService.isUserExist(qp['id'])){
+      if (this.servicesService.isUserExist(qp['id'])) {
         this.user = this.servicesService.getData(qp['id'])!;
       }
     });
   }
-  constructor(private router:Router,private route:ActivatedRoute, private servicesService:ServicesService){
-    // userId = route.snapshot.queryParams['id'];
+  constructor(private router: Router, private route: ActivatedRoute, private servicesService: ServicesService) {
+
     console.log(localStorage.getItem('data'));
-    // if(servicesService.getData("data") != -1){
-    //   this.user = JSON.parse( localStorage.getItem('data') ?? "{}");
-    // }
+
   }
 
-  userId : string | undefined;
-  user : userModel  = {
-    id:"",
-    fname:"",
-    mname:"",
-    lname:"",
-    age:0,
-    gender:"",
-    hobby:{},
-    company:""
+  userId: string | undefined;
+  user: userModel = {
+    id: "",
+    fname: "",
+    mname: "",
+    lname: "",
+    age: 0,
+    gender: "",
+    hobby: {},
+    company: ""
   };
- onSubmit(){
+  onSubmit() {
 
- }
+  }
 
- 
- onSubmission(){
-  //  localStorage.setItem('data',JSON.stringify(this.user));
-   
-  //  this.router.navigate(['/reactive-form'])
 
-  this.user.id = this.userId!;
-    this.servicesService.setData(this.userId,this.user);
-    this.router.navigate(['/reactive-form'],{queryParamsHandling: 'preserve'})
- }
+  onSubmission() {
+    this.user.id = this.userId!;
+    this.servicesService.setData(this.userId, this.user);
+    this.router.navigate(['/reactive-form'], { queryParamsHandling: 'preserve' })
+  }
 }
